@@ -1,0 +1,8 @@
+/build
+.gradle
+.idea
+/*.iml
+/local.properties
+
+
+/l11_app_listview_pw.iml
