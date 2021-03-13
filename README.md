@@ -6,5 +6,5 @@
 - 自定义侧边栏快速索引 View；
 - ListView 的优化；
 
-![image](https://github.com/xinpengfei520/Uninstall_Master/tree/master/image/example1.png)
+![image](https://github.com/xinpengfei520/Uninstall_Master/blob/master/image/example1.jpg)
 
