@@ -1,7 +1,9 @@
 # Uninstall_Master
 卸载大师    
 
-![image](https://github.com/xinpengfei520/Uninstall_Master/blob/master/image/example1.png)
-![image](https://github.com/xinpengfei520/Uninstall_Master/blob/master/image/example2.png)
-![image](https://github.com/xinpengfei520/Uninstall_Master/blob/master/image/example3.png)
+- 支持卸载后刷新应用列表；
+- 自定义侧边栏快速索引 View；
+- ListView 的优化；
+
+![image](image/example1.png)
 
