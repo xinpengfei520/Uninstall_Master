@@ -27,15 +27,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.xpf.android.uninstall.adapter.AppAdapter;
 import com.xpf.android.uninstall.bean.AppInfo;
+import com.xpf.android.uninstall.utils.PinYinUtils;
 import com.xpf.android.uninstall.utils.Utils;
 import com.xpf.android.uninstall.widget.QuickIndexView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
+    // TODO: 3/21/21 ① 顶部字母吸附效果，吸附后字母颜色变化；② 按压震动效果；
     private static final String TAG = "MainActivity";
 
     private ListView mListView;
@@ -91,12 +94,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mHandler = new Handler(Looper.getMainLooper());
 
         Log.e(TAG, "onCreate1: mList hashCode -> " + mList.hashCode());
-        //初始化集合数据
-        mList.addAll(getAllAppInfos());
+        // 初始化集合数据
+        mList.addAll(getAllAppList());
         Log.e(TAG, "onCreate2: mList hashCode -> " + mList.hashCode());
         // 初始化Adapter
         mAdapter = new AppAdapter(this, mList);
-        //显示列表
+        // 显示列表
         mListView.setAdapter(mAdapter);
 
         initListener();
@@ -203,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     /*
      * 得到手机中所有应用信息的列表 AppInfo Drawable icon String appName String packageName
      */
-    protected List<AppInfo> getAllAppInfos() {
+    protected List<AppInfo> getAllAppList() {
         List<AppInfo> list = new ArrayList<>();
         // 得到应用的 packageManager
         PackageManager packageManager = getPackageManager();
@@ -228,7 +231,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             list.add(appInfo);
         }
 
-        return list;
+        // 先将字母开头的和其他字符例如数字等先分开
+        List<AppInfo> letterList = new ArrayList<>();
+        List<AppInfo> otherList = new ArrayList<>();
+
+        for (AppInfo appInfo : list) {
+            if (PinYinUtils.isLetter(appInfo.getPinyin().substring(0, 1))) {
+                letterList.add(appInfo);
+            } else {
+                otherList.add(appInfo);
+            }
+        }
+
+        // 将获取到字母集合的数据按字母序排序
+        Collections.sort(letterList, (o1, o2) -> o1.getPinyin().substring(0, 1).compareToIgnoreCase(o2.getPinyin().substring(0, 1)));
+
+        // 将其他字符放到字母集合后面
+        letterList.addAll(otherList);
+
+        return letterList;
+
     }
 
     /**
@@ -313,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // 方式二：这种方式是 list 和 adapter 已经绑定了，还是同一个 List，我们只是修改它里面的数据，修改后可以直接刷新
         mList.clear();
-        mList.addAll(getAllAppInfos());
+        mList.addAll(getAllAppList());
         Log.e(TAG, "refreshList: mList hashCode -> " + mList.hashCode());
         mAdapter.notifyDataSetChanged();
     }

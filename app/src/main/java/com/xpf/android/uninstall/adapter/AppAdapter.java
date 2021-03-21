@@ -52,7 +52,7 @@ public class AppAdapter extends BaseAdapter {
             convertView = View.inflate(mContext, R.layout.item_app, null);
             holder = new ViewHolder();
 
-            // 3.获取 convertView 指定的每一个视图对象
+            // 2.获取 convertView 指定的每一个视图对象
             holder.ivItemIcon = convertView.findViewById(R.id.iv_item_icon);
             holder.tvItemName = convertView.findViewById(R.id.tv_item_name);
             holder.tvLetter = convertView.findViewById(R.id.tvLetter);
@@ -63,7 +63,7 @@ public class AppAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        // 2.获取指定位置的索引的数据
+        // 3.获取指定位置的索引的数据
         AppInfo appInfo = mList.get(position);
         Log.e(TAG, "getView: mList hashCode -> " + mList.hashCode());
 
@@ -71,8 +71,8 @@ public class AppAdapter extends BaseAdapter {
         holder.ivItemIcon.setImageDrawable(appInfo.getIcon());
         holder.tvItemName.setText(appInfo.getAppName());
 
-        // 根据位置得到对应的数据
-        String letter = appInfo.getPinyin().substring(0, 1);
+        // 5.获取 App 名称的首字母(需转成大写)
+        String letter = appInfo.getPinyin().substring(0, 1).toUpperCase();
         holder.tvLetter.setText(letter);
 
         if (position == 0) {

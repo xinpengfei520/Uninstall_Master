@@ -12,6 +12,8 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  */
 public class PinYinUtils {
 
+    private static final String REGEX = "[a-zA-Z]";
+
     /**
      * 得到指定汉字的拼音
      * 注意:不应该被频繁调用，它消耗一定内存
@@ -52,5 +54,9 @@ public class PinYinUtils {
         }
 
         return stringBuilder.toString();
+    }
+
+    public static boolean isLetter(String str) {
+        return str.matches(REGEX);
     }
 }
